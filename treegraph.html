@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.js"></script>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.js"></script>
-	    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="lib/bootstrap/js/bootstrap-tooltip.min.js"></script>
+	    <link href="lib/bootstrap/css/bootstrap-tooltip.min.css" rel="stylesheet" type="text/css" />
 		<script>
 			var pageLoaded = function() {
-                var json = {name:"app", children:[{name: "one"},{name: "two", children:[{name: "two.one"}]}]}
+                var json = 
+                {
+                	name:"app", children:[
+	                	{name: "one"},
+	                	{name: "two", children:[
+	                		{name: "two.one"}
+	                	]},
+	                	{name: "three", children:[
+	                		{name: "three.one", linked: "two.one"}
+	                	]}
+	                ]
+	            }
 
 				var width = 1200;
 				var height = 850;
@@ -132,14 +143,15 @@
 				    });
 
 				    // Update tooltips for linked states
-				    $(".node.linked circle").tipsy({ 
-				        gravity: 'w', 
-				        html: true, 
-				        title: function() {
-				        	var d = this.__data__;
-				        	return 'Copy of <b>' + d.linked + '</b>'; 
-				        }
-				      });
+				    $(".node.linked circle").tooltip({
+                    	container: 'body',
+                    	placement: 'top',
+                    	html: true,
+                    	title: function() {
+                    	    var d = this.__data__;
+                    	    return 'Copy of <b>' + d.linked + '</b>';
+                    	}
+                	});
 				}
 
 				function computeRadius(d)

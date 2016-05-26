@@ -1,0 +1,56 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.js"></script>
+    <script>
+        myApp.config(function($stateProvider, $urlRouterProvider) {
+		  //
+		  // For any unmatched url, redirect to /state1
+		  $urlRouterProvider.otherwise("/state1");
+		  //
+		  // Now set up the states
+		  $stateProvider
+		    .state('state1', {
+		      url: "/state1",
+		      templateUrl: "partials/state1.html"
+		    })
+		    .state('state1.list', {
+		      url: "/list",
+		      templateUrl: "partials/state1.list.html",
+		      controller: function($scope) {
+		        $scope.items = ["A", "List", "Of", "Items"];
+		      }
+		    })
+		    .state('state2', {
+		      url: "/state2",
+		      templateUrl: "partials/state2.html"
+		    })
+		    .state('state2.list', {
+		      url: "/list",
+		      templateUrl: "partials/state2.list.html",
+		      controller: function($scope) {
+		        $scope.things = ["A", "Set", "Of", "Things"];
+		      }
+		    });
+		});
+    </script>
+</head>
+<body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <a class="brand" href="#">Quick Start</a>
+      <ul class="nav">
+        <li><a ui-sref="route1">Route 1</a></li>
+        <li><a ui-sref="route2">Route 2</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span12">
+      <div class="well" ui-view></div>        
+    </div>
+  </div> 
+</body>
+</html>
